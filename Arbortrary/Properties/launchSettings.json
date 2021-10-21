@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Arbortrary": {
+      "commandName": "Project",
+      "commandLineArgs": "-t \"Arbortrary\""
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+	<AssemblyName>Wacton.Arbortrary</AssemblyName>
+	<RootNamespace>Wacton.Arbortrary</RootNamespace>
+	<Authors>William Acton</Authors>
+	<Company>William Acton</Company>
+	<Description />
+	<PackageProjectUrl>https://gitlab.com/Wacton/arbortrary</PackageProjectUrl>
+	<Copyright>William Acton</Copyright>
+	<RepositoryUrl>https://gitlab.com/Wacton/arbortrary</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ColorMine" Version="1.1.3" />
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
+  </ItemGroup>
+
+</Project>
