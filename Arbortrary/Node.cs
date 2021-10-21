@@ -5,13 +5,13 @@ namespace Wacton.Arbortrary
     internal class Node
     {
         public PointF Point { get; }
-        public Hsba Color { get; }
+        public Colour Colour { get; }
         public double Bearing { get; }
 
-        public Node(PointF point, Hsba color, double bearing)
+        public Node(PointF point, Colour colour, double bearing)
         {
             Point = point;
-            Color = color;
+            Colour = colour;
             Bearing = bearing;
         }
     }

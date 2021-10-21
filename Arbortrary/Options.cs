@@ -26,7 +26,7 @@ namespace Wacton.Arbortrary
         public string Background { get; set; }
 
         [Option('c', "first-node-colour", Required = false, HelpText = "(Default: random colour) Set first node colour to specified #ARGB format", MetaValue = "string")]
-        public string FirstColor { get; set; }
+        public string FirstColour { get; set; }
 
         [Option('m', "first-node-match-background", Required = false, Default = false, HelpText = "Set first node colour to match background", MetaValue = "bool")]
         public bool FirstColourMatchesBackground { get; set; }

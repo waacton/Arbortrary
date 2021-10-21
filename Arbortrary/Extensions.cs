@@ -1,23 +1,20 @@
 ﻿using System;
-using ColorMine.ColorSpaces;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Wacton.Arbortrary
 {
     internal static class Extensions
     {
-        public static Hsba GetColor(this Random random, bool includeAlpha)
+        public static Colour GetColour(this Random random, bool includeAlpha)
         {
-            // H = 0-359, S = 0-1, B = 0-1
+            // H = 0-359, S = 0-1, B = 0-1, A = 0-1
             var h = random.NextDouble() * 359;
             var s = random.NextDouble();
             var b = random.NextDouble();
-            var hsb = new Hsb { H = h, S = s, B = b };
+            var a = random.NextDouble();
+            var alpha = includeAlpha ? a : 1.0;
 
-            // A = 0-255
-            var a = random.NextDouble() * 255;
-            var alpha = includeAlpha ? a : 255;
-
-            return new Hsba (hsb, alpha);
+            return Colour.FromHsb(h, s, b, alpha);
         }
 
         public static bool GetBool(this Random random)
@@ -33,6 +30,16 @@ namespace Wacton.Arbortrary
             if (value == min) return true;
             if (value == max) return false;
             return randomNumber == 1;
+        }
+
+        public static Rgba32 ToRgba32(this Colour colour)
+        {
+            var rgb = colour.Rgb;
+            var rByte = Convert.ToByte(rgb.R * 255);
+            var gByte = Convert.ToByte(rgb.G * 255);
+            var bByte = Convert.ToByte(rgb.B * 255);
+            var aByte = Convert.ToByte(colour.A * 255);
+            return new Rgba32(rByte, gByte, bByte, aByte);
         }
     }
 }
