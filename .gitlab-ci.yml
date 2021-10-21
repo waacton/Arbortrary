@@ -7,6 +7,7 @@ stages:
 build:
     stage: build
     script:
+        - "dotnet restore"
         - "dotnet build Arbortrary"
     artifacts:
       paths:
