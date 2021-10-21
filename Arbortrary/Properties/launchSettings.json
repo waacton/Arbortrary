@@ -2,7 +2,7 @@
   "profiles": {
     "Arbortrary": {
       "commandName": "Project",
-      "commandLineArgs": "-t \"Arbortrary\" -a"
+      "commandLineArgs": "-t \"Arbortrary\""
     }
   }
 }
