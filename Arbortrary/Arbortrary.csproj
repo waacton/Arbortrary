@@ -11,6 +11,7 @@
 	<PackageProjectUrl>https://gitlab.com/Wacton/arbortrary</PackageProjectUrl>
 	<Copyright>William Acton</Copyright>
 	<RepositoryUrl>https://gitlab.com/Wacton/arbortrary</RepositoryUrl>
+	<ApplicationIcon>Resources\Arbortrary.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
