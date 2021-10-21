@@ -2,7 +2,7 @@
 
 namespace Wacton.Arbortrary
 {
-    internal class Options
+    public class Options
     {
         [Option('s', "seed", Group = "seed", HelpText = "Seed to use for the random number generator", MetaValue = "int")]
         public int? Seed { get; set; }

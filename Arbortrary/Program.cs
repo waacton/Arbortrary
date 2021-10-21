@@ -15,13 +15,19 @@ namespace Wacton.Arbortrary
 {
     public class Program
     {
-        public static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).WithParsed(GenerateTree);
+        public static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).WithParsed(Execute);
 
-        private static void GenerateTree(Options options)
+        private static void Execute(Options options)
         {
             var fallbackOutput = GetOutputFilename(options.Seed, options.Text, options.InputFilepath);
             var outputFilepath = options.OutputFilepath ?? fallbackOutput;
 
+            using var image = GenerateTreeImage(options);
+            SaveImage(image, outputFilepath);
+        }
+
+        public static Image<Rgba32> GenerateTreeImage(Options options)
+        {
             var (seed, source) = Seed.Get(options.Seed, options.Text, options.InputFilepath);
             var random = new Random(seed);
 
@@ -34,7 +40,7 @@ namespace Wacton.Arbortrary
 
             PrintDetails(options, seed, source, background, firstNode);
 
-            using var image = new Image<Rgba32>(options.Width, options.Height);
+            var image = new Image<Rgba32>(options.Width, options.Height);
             SetBackground(image, background);
             AddCircle(image, firstNode.Point, firstNode.Color);
 
@@ -50,7 +56,7 @@ namespace Wacton.Arbortrary
                 AddLine(image, node.Point, node.Color, connectedNode.Point, connectedNode.Color);
             }
 
-            SaveImage(image, outputFilepath);
+            return image;
         }
 
         private static Node GetFirstNode(Options options, Hsba background, Random random)
