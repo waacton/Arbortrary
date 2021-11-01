@@ -5,7 +5,7 @@ For example, the default tree that represents the text "Arbortrary":<br>
 `Wacton.Arbortrary.exe --text "Arbortrary"`
 ![Example: default tree for the text "Arbortrary"](Resources/example-1_default.png "Example: default tree for the text \"Arbortrary\"")
 
-Specifying colours will determine initial colours while the tree structure remains the same:<br>
+Specifying colours will determine initial colour values while the tree structure remains the same:<br>
 `Wacton.Arbortrary.exe --text "Arbortrary" --background-colour "#404040" --first-node-colour "#E8E8E8"`
 ![Example: tree for the text "Arbortrary" with custom initial colours](Resources/example-2_initial-colours.png "Example: tree for the text \"Arbortrary\" with custom initial colours")
 
