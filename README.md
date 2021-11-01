@@ -12,3 +12,15 @@ Specifying colours will determine initial colour values while the tree structure
 Other parameters include the number of nodes to generate:<br>
 `Wacton.Arbortrary.exe --text "Arbortrary" --background-colour "#404040" --first-node-colour "#E8E8E8" --nodes 500`
 ![Example: tree for the text "Arbortrary" with custom initial colours and more nodes](Resources/example-3_initial-colours-more-nodes.png "Example: tree for the text \"Arbortrary\" with custom initial colours and more nodes")
+
+## Attributions 🙇
+This application uses the following software packages in conformance to their respective licences:
+
+**CommandLineParser** ([MIT License](https://github.com/commandlineparser/commandline/blob/master/License.md) · [source](https://github.com/commandlineparser/commandline))
+Giacomo Stelluti Scala & Contributors<br>
+**SixLabors.ImageSharp** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp))<br>
+**SixLabors.ImageSharp.Drawing** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp.Drawing/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp.Drawing))
+
+---
+
+[Wacton.Arbortrary](https://gitlab.com/Wacton/arbortrary) by William Acton is licensed under the [GNU General Public License v3.0](https://gitlab.com/Wacton/arbortrary/-/blob/main/LICENSE).
