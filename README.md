@@ -17,7 +17,7 @@ Other parameters include the number of nodes to generate:<br>
 This application uses the following software packages in conformance to their respective licences:
 
 - **CommandLineParser** ([MIT License](https://github.com/commandlineparser/commandline/blob/master/License.md) · [source](https://github.com/commandlineparser/commandline))
-Giacomo Stelluti Scala & Contributors
+Copyright Giacomo Stelluti Scala & Contributors
 - **SixLabors.ImageSharp** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp))
 - **SixLabors.ImageSharp.Drawing** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp.Drawing/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp.Drawing))
 
