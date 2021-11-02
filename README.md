@@ -16,11 +16,11 @@ Other parameters include the number of nodes to generate:<br>
 ## Attributions 🙇
 This application uses the following software packages in conformance to their respective licences:
 
-- **CommandLineParser** ([MIT License](https://github.com/commandlineparser/commandline/blob/master/License.md) · [source](https://github.com/commandlineparser/commandline))
-Copyright Giacomo Stelluti Scala & Contributors
-- **SixLabors.ImageSharp** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp))
-- **SixLabors.ImageSharp.Drawing** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp.Drawing/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp.Drawing))
+- **CommandLineParser** ([MIT License](https://github.com/commandlineparser/commandline/blob/master/License.md) · [source](https://github.com/commandlineparser/commandline)),
+copyright © Giacomo Stelluti Scala & Contributors
+- **SixLabors.ImageSharp** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp)), copyright © Six Labors
+- **SixLabors.ImageSharp.Drawing** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp.Drawing/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp.Drawing)), copyright © Six Labors
 
 ---
 
-[Wacton.Arbortrary](https://gitlab.com/Wacton/Arbortrary) by William Acton is licensed under the [GNU General Public License v3.0](https://gitlab.com/Wacton/Arbortrary/-/blob/main/LICENSE).
+[Wacton.Arbortrary](https://gitlab.com/Wacton/Arbortrary) is licensed under the [GNU General Public License v3.0](https://gitlab.com/Wacton/Arbortrary/-/blob/main/LICENSE), copyright © 2021 William Acton
