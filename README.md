@@ -23,4 +23,4 @@ copyright © Giacomo Stelluti Scala & Contributors
 
 ---
 
-[Wacton.Arbortrary](https://gitlab.com/Wacton/Arbortrary) is licensed under the [GNU General Public License v3.0](https://gitlab.com/Wacton/Arbortrary/-/blob/main/LICENSE), copyright © 2021 William Acton
+[Wacton.Arbortrary](https://gitlab.com/Wacton/Arbortrary) is licensed under the [GNU General Public License v3.0](https://gitlab.com/Wacton/Arbortrary/-/blob/main/LICENSE), copyright © 2021 William Acton.
