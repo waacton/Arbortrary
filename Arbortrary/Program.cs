@@ -14,6 +14,11 @@ namespace Wacton.Arbortrary
 {
     public class Program
     {
+        private const float EllipseRadius = 3;
+        private const float LineThickness = 1;
+        private const float DistanceMin = 10;
+        private const float DistanceMax = 190;
+        
         public static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).WithParsed(Execute);
 
         private static void Execute(Options options)
@@ -41,18 +46,18 @@ namespace Wacton.Arbortrary
 
             var image = new Image<Rgba32>(options.Width, options.Height);
             SetBackground(image, background);
-            AddCircle(image, firstNode.Point, firstNode.Colour);
+            AddCircle(image, firstNode.Point, firstNode.Colour, options.Zoom);
 
             for (var i = 1; i < options.NodeCount; i++)
             {
                 var connectedIndex = random.Next(nodes.Count);
                 var connectedNode = nodes[connectedIndex];
 
-                var node = GetNextNode(connectedNode, options.AdjustAlpha, random);
+                var node = GetNextNode(connectedNode, options.AdjustAlpha, options.Zoom, random);
                 nodes.Add(node);
 
-                AddLine(image, node.Point, node.Colour, connectedNode.Point, connectedNode.Colour);
-                AddCircle(image, node.Point, node.Colour);
+                AddLine(image, node.Point, node.Colour, connectedNode.Point, connectedNode.Colour, options.Zoom);
+                AddCircle(image, node.Point, node.Colour, options.Zoom);
             }
 
             return image;
@@ -113,12 +118,12 @@ namespace Wacton.Arbortrary
             return Colour.FromRgb(color.R, color.G, color.B, color.A);
         }
 
-        private static Node GetNextNode(Node connectedNode, bool adjustAlpha, Random random)
+        private static Node GetNextNode(Node connectedNode, bool adjustAlpha, float zoom, Random random)
         {
             var degree = (random.NextDouble() * 90) - 45;
             var bearing = Modulo(connectedNode.Bearing + degree, 360);
 
-            var distance = (random.NextDouble() * 190) + 10; // somewhere between 10 - 200 pixels away
+            var distance = (random.NextDouble() * DistanceMax * zoom) + (DistanceMin * zoom); // somewhere between 10 - 200 pixels away
             var xDistance = Math.Sin(ToRadians(bearing)) * distance;
             var yDistance = Math.Cos(ToRadians(bearing)) * distance;
             var x = connectedNode.Point.X + xDistance;
@@ -185,19 +190,19 @@ namespace Wacton.Arbortrary
             image.Mutate(x => x.BackgroundColor(colour.ToRgba32()));
         }
 
-        private static void AddCircle(Image image, PointF point, Colour colour)
+        private static void AddCircle(Image image, PointF point, Colour colour, float zoom)
         {
             IBrush brush = new SolidBrush(colour.ToRgba32());
-            IPath ellipse = new EllipsePolygon(point, 3);
+            IPath ellipse = new EllipsePolygon(point, EllipseRadius * zoom);
             image.Mutate(x => x.Fill(brush, ellipse));
         }
 
-        private static void AddLine(Image image, PointF point1, Colour colour1, PointF point2, Colour colour2)
+        private static void AddLine(Image image, PointF point1, Colour colour1, PointF point2, Colour colour2, float zoom)
         {
             var colorStop1 = new ColorStop(0.0f, colour1.ToRgba32());
             var colorStop2 = new ColorStop(1.0f, colour2.ToRgba32());
             IBrush brush = new LinearGradientBrush(point1, point2, GradientRepetitionMode.DontFill, colorStop1, colorStop2);
-            image.Mutate(x => x.DrawLines(brush, 1.0f, point1, point2));
+            image.Mutate(x => x.DrawLines(brush, LineThickness * zoom, point1, point2));
         }
 
         private static string GetOutputFilename(int? seed, string text, string filepath)
@@ -220,6 +225,7 @@ namespace Wacton.Arbortrary
             Console.WriteLine($"    - first node {firstNode.Colour} @ ({firstNode.Point.X},{firstNode.Point.Y}) @ {firstNode.Bearing} degrees");
             Console.WriteLine($"    - node count {options.NodeCount}");
             Console.WriteLine($"    - alpha {(options.AdjustAlpha ? "adjusting" : "ignored")}");
+            Console.WriteLine($"    - zoom {options.Zoom}");
         }
 
         private static void SaveImage(Image image, string filepath)

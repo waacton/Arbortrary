@@ -45,5 +45,8 @@ namespace Wacton.Arbortrary
 
         [Option('a', "alpha", Required = false, Default = false, HelpText = "Adjust alpha channel while generating", MetaValue = "bool")]
         public bool AdjustAlpha { get; set; }
+        
+        [Option('z', "zoom", Required = false, Default = 1, HelpText = "Zoom scale", MetaValue = "float")]
+        public float Zoom { get; set; }
     }
 }
