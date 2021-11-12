@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+    using System.Linq;
+
     public class Rgb
     {
         public double R { get; }

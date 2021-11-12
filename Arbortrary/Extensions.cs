@@ -1,8 +1,8 @@
-﻿using System;
-using SixLabors.ImageSharp.PixelFormats;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+    using SixLabors.ImageSharp.PixelFormats;
+
     internal static class Extensions
     {
         public static Colour GetColour(this Random random, bool includeAlpha)

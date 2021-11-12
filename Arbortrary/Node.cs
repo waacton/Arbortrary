@@ -1,7 +1,7 @@
-﻿using SixLabors.ImageSharp;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using SixLabors.ImageSharp;
+
     internal class Node
     {
         public PointF Point { get; }

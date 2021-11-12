@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+
     public class Colour
     {
         public Hsb Hsb { get; }

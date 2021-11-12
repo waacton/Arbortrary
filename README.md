@@ -13,6 +13,10 @@ Other parameters include the number of nodes to generate:<br>
 `Wacton.Arbortrary.exe --text "Arbortrary" --background-colour "#404040" --first-node-colour "#E8E8E8" --nodes 500`
 ![Example: tree for the text "Arbortrary" with custom initial colours and more nodes](Resources/example-3_initial-colours-more-nodes.png "Example: tree for the text \"Arbortrary\" with custom initial colours and more nodes")
 
+Gif can also be generated:<br>
+`Wacton.Arbortrary.exe --text "Arbortrary" --gif --background-colour "#E8E8E8" --first-node-colour "#404040" --width 960 --height 540 --zoom 0.5`
+![Example: tree for the text "Arbortrary" as a gif with custom initial colours and scaled down](Resources/example-4_initial-colours-scaled.gif "Example: tree for the text \"Arbortrary\" as a gif with custom initial colours and scaled down")
+
 ## Attributions 🙇
 This application uses the following software packages in conformance to their respective licences:
 

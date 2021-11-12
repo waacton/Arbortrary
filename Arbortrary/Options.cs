@@ -1,7 +1,7 @@
-﻿using CommandLine;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using CommandLine;
+
     public class Options
     {
         [Option('s', "seed", Group = "seed", HelpText = "Seed to use for the random number generator", MetaValue = "int")]
@@ -48,5 +48,8 @@ namespace Wacton.Arbortrary
         
         [Option('z', "zoom", Required = false, Default = 1, HelpText = "Zoom scale", MetaValue = "float")]
         public float Zoom { get; set; }
+        
+        [Option('g', "gif", Required = false, Default = false, HelpText = "Generate .gif as well as .png", MetaValue = "bool")]
+        public bool CreateGif { get; set; }
     }
 }

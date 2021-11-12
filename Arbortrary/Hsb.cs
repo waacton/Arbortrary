@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+
     public class Hsb
     {
         public double H { get; }

@@ -1,36 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using CommandLine;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Drawing;
-using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-using Path = System.IO.Path;
-using PointF = SixLabors.ImageSharp.PointF;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using CommandLine;
+    using PointF = SixLabors.ImageSharp.PointF;
+
     public class Program
     {
-        private const float EllipseRadius = 3;
-        private const float LineThickness = 1;
-        private const float DistanceMin = 10;
-        private const float DistanceMax = 190;
-        
         public static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).WithParsed(Execute);
 
         private static void Execute(Options options)
         {
             var fallbackOutput = GetOutputFilename(options.Seed, options.Text, options.InputFilepath);
-            var outputFilepath = options.OutputFilepath ?? fallbackOutput;
+            var targetFilepath = options.OutputFilepath ?? fallbackOutput;
 
-            using var image = GenerateTreeImage(options);
-            SaveImage(image, outputFilepath);
+            var generatedImage = GenerateTreeImage(options);
+            var actualFilepath = generatedImage.Save(targetFilepath);
+            Console.Write($"Arbortrary image saved to: {actualFilepath}");
         }
 
-        public static Image<Rgba32> GenerateTreeImage(Options options)
+        public static GeneratedImage GenerateTreeImage(Options options)
         {
             var (seed, source) = Seed.Get(options.Seed, options.Text, options.InputFilepath);
             var random = new Random(seed);
@@ -44,9 +35,9 @@ namespace Wacton.Arbortrary
 
             PrintDetails(options, seed, source, background, firstNode);
 
-            var image = new Image<Rgba32>(options.Width, options.Height);
-            SetBackground(image, background);
-            AddCircle(image, firstNode.Point, firstNode.Colour, options.Zoom);
+            var generatedImage = new GeneratedImage(options.Width, options.Height, options.Zoom, options.CreateGif);
+            generatedImage.SetBackground(background);
+            generatedImage.AddCircle(firstNode.Point, firstNode.Colour);
 
             for (var i = 1; i < options.NodeCount; i++)
             {
@@ -56,11 +47,19 @@ namespace Wacton.Arbortrary
                 var node = GetNextNode(connectedNode, options.AdjustAlpha, options.Zoom, random);
                 nodes.Add(node);
 
-                AddLine(image, node.Point, node.Colour, connectedNode.Point, connectedNode.Colour, options.Zoom);
-                AddCircle(image, node.Point, node.Colour, options.Zoom);
+                generatedImage.AddLine(node.Point, node.Colour, connectedNode.Point, connectedNode.Colour);
+                generatedImage.AddCircle(node.Point, node.Colour);
+
             }
 
-            return image;
+            return generatedImage;
+        }
+        
+        private static Node GetNextNode(Node connectedNode, bool adjustAlpha, float zoom, Random random)
+        {
+            var (point, bearing) = Calculations.NextPointAndBearing(connectedNode.Point, connectedNode.Bearing, zoom, random);
+            var colour = Calculations.NextColour(connectedNode.Colour, adjustAlpha, random);
+            return new Node(point, colour, bearing);
         }
 
         private static Node GetFirstNode(Options options, Colour background, Random random)
@@ -108,7 +107,7 @@ namespace Wacton.Arbortrary
 
         private static double GetFirstBearing(double? optionalBearing, bool isCustomLocation, PointF firstPoint, int width, int height)
         {
-            var fallbackBearing = isCustomLocation ? CalculateOptimalBearing(firstPoint, width, height) : 0;
+            var fallbackBearing = isCustomLocation ? Calculations.OptimalBearing(firstPoint, width, height) : 0;
             return optionalBearing ?? fallbackBearing;
         }
 
@@ -116,93 +115,6 @@ namespace Wacton.Arbortrary
         {
             var color = ColorTranslator.FromHtml(value);
             return Colour.FromRgb(color.R, color.G, color.B, color.A);
-        }
-
-        private static Node GetNextNode(Node connectedNode, bool adjustAlpha, float zoom, Random random)
-        {
-            var degree = (random.NextDouble() * 90) - 45;
-            var bearing = Modulo(connectedNode.Bearing + degree, 360);
-
-            var distance = (random.NextDouble() * DistanceMax * zoom) + (DistanceMin * zoom); // somewhere between 10 - 200 pixels away
-            var xDistance = Math.Sin(ToRadians(bearing)) * distance;
-            var yDistance = Math.Cos(ToRadians(bearing)) * distance;
-            var x = connectedNode.Point.X + xDistance;
-            var y = connectedNode.Point.Y - yDistance; // inverse as 0 is top for graphics, but I was positive to go upwards
-            var point = new PointF((float)x, (float)y);
-
-            var oldColour = connectedNode.Colour;
-
-            var hPositive = random.GetBool();
-            var hStep = random.NextDouble() * (360 / 8.0); // hue can jump by 1/8 of the space, between 0 to 45 degrees shift
-            var h = hPositive ? Modulo(oldColour.H + hStep , 360) : Modulo(oldColour.H - hStep, 360);
-            h = h < 0 ? 360 + h : h;
-
-            var sPositive = random.GetBool(oldColour.S, 0, 1);
-            var sStep = random.NextDouble() * (1 / 5.0); // saturation can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var s = sPositive ? Math.Min(oldColour.S + sStep, 1) : Math.Max(oldColour.S - sStep, 0);
-
-            var bPositive = random.GetBool(oldColour.B, 0, 1);
-            var bStep = random.NextDouble() * (1 / 5.0); // brightness can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var b = bPositive ? Math.Min(oldColour.B + bStep, 1) : Math.Max(oldColour.B - bStep, 0);
-
-            var aPositive = random.GetBool(oldColour.A, 0, 1);
-            var aStep = random.NextDouble() * (1 / 5.0); // alpha can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var a = aPositive ? Math.Min(oldColour.A + aStep, 1) : Math.Max(oldColour.A - aStep, 0);
-
-            var colour = Colour.FromHsb(h, s, b, adjustAlpha ? a : oldColour.A);
-
-            return new Node(point, colour, bearing);
-        }
-
-        
-        private static double Modulo(double value, double modulus)
-        {
-            var remainder = value % modulus;
-            return remainder < 0 ? modulus + remainder : remainder; // handles negatives, e.g. -10 % 360 returns 350 instead of -10
-        }
-
-        private static double CalculateOptimalBearing(PointF point, int width, int height)
-        {
-            var halfWidth = width / 2.0;
-            var halfHeight = height / 2.0;
-
-            var isXBeyondMid = point.X > halfWidth;
-            var isYBeyondMid = point.Y > halfHeight;
-
-            var xDistance = isXBeyondMid ? point.X : width - point.X;
-            var yDistance = isYBeyondMid ? point.Y : height - point.Y;
-
-            return isXBeyondMid switch
-            {
-                false when isYBeyondMid => ToDegrees(Math.Tanh(xDistance / yDistance)),
-                false when !isYBeyondMid => ToDegrees(Math.Tanh(yDistance / xDistance)) + 90,
-                true when !isYBeyondMid => ToDegrees(Math.Tanh(xDistance / yDistance)) + 180,
-                true when isYBeyondMid => ToDegrees(Math.Tanh(yDistance / xDistance)) + 270,
-                _ => throw new InvalidOperationException("Cannot calculate bearing")
-            };
-        }
-
-        private static double ToRadians(double degrees) => Math.PI * degrees / 180;
-        private static double ToDegrees(double radians) => radians * 180 / Math.PI;
-
-        private static void SetBackground(Image image, Colour colour)
-        {
-            image.Mutate(x => x.BackgroundColor(colour.ToRgba32()));
-        }
-
-        private static void AddCircle(Image image, PointF point, Colour colour, float zoom)
-        {
-            IBrush brush = new SolidBrush(colour.ToRgba32());
-            IPath ellipse = new EllipsePolygon(point, EllipseRadius * zoom);
-            image.Mutate(x => x.Fill(brush, ellipse));
-        }
-
-        private static void AddLine(Image image, PointF point1, Colour colour1, PointF point2, Colour colour2, float zoom)
-        {
-            var colorStop1 = new ColorStop(0.0f, colour1.ToRgba32());
-            var colorStop2 = new ColorStop(1.0f, colour2.ToRgba32());
-            IBrush brush = new LinearGradientBrush(point1, point2, GradientRepetitionMode.DontFill, colorStop1, colorStop2);
-            image.Mutate(x => x.DrawLines(brush, LineThickness * zoom, point1, point2));
         }
 
         private static string GetOutputFilename(int? seed, string text, string filepath)
@@ -226,12 +138,7 @@ namespace Wacton.Arbortrary
             Console.WriteLine($"    - node count {options.NodeCount}");
             Console.WriteLine($"    - alpha {(options.AdjustAlpha ? "adjusting" : "ignored")}");
             Console.WriteLine($"    - zoom {options.Zoom}");
-        }
-
-        private static void SaveImage(Image image, string filepath)
-        {
-            image.SaveAsPng(filepath);
-            Console.Write($"Arbortrary image saved to: {filepath}");
+            Console.WriteLine($"    - gif {(options.CreateGif ? "included" : "ignored")}");
         }
     }
 }

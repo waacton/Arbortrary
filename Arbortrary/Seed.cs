@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary
 {
+    using System;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+
     internal static class Seed
     {
         public static (int value, string source) Get(int? seed, string text, string filepath)
