@@ -2,6 +2,7 @@
 {
     using System;
     using SixLabors.ImageSharp;
+    using Wacton.Unicolour;
 
     internal static class Calculations
     {
@@ -23,26 +24,29 @@
             return (point, bearing);
         }
 
-        public static Colour NextColour(Colour oldColour, bool adjustAlpha, Random random)
+        public static Unicolour NextColour(Unicolour oldColour, bool adjustAlpha, Random random)
         {
+            var oldHsb = oldColour.Hsb;
+            var oldAlpha = oldColour.Alpha;
+            
             var hPositive = random.GetBool();
             var hStep = random.NextDouble() * (360 / 8.0); // hue can jump by 1/8 of the space, between 0 to 45 degrees shift
-            var h = hPositive ? Modulo(oldColour.H + hStep , 360) : Modulo(oldColour.H - hStep, 360);
+            var h = hPositive ? Modulo(oldHsb.H + hStep , 360) : Modulo(oldHsb.H - hStep, 360);
             h = h < 0 ? 360 + h : h;
 
-            var sPositive = random.GetBool(oldColour.S, 0, 1);
+            var sPositive = random.GetBool(oldHsb.S, 0, 1);
             var sStep = random.NextDouble() * (1 / 5.0); // saturation can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var s = sPositive ? Math.Min(oldColour.S + sStep, 1) : Math.Max(oldColour.S - sStep, 0);
+            var s = sPositive ? Math.Min(oldHsb.S + sStep, 1) : Math.Max(oldHsb.S - sStep, 0);
 
-            var bPositive = random.GetBool(oldColour.B, 0, 1);
+            var bPositive = random.GetBool(oldHsb.B, 0, 1);
             var bStep = random.NextDouble() * (1 / 5.0); // brightness can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var b = bPositive ? Math.Min(oldColour.B + bStep, 1) : Math.Max(oldColour.B - bStep, 0);
+            var b = bPositive ? Math.Min(oldHsb.B + bStep, 1) : Math.Max(oldHsb.B - bStep, 0);
 
-            var aPositive = random.GetBool(oldColour.A, 0, 1);
+            var aPositive = random.GetBool(oldAlpha.A, 0, 1);
             var aStep = random.NextDouble() * (1 / 5.0); // alpha can jump by 1/5 of the space, between 0 to 0.2 value shift
-            var a = aPositive ? Math.Min(oldColour.A + aStep, 1) : Math.Max(oldColour.A - aStep, 0);
+            var a = aPositive ? Math.Min(oldAlpha.A + aStep, 1) : Math.Max(oldAlpha.A - aStep, 0);
 
-            return Colour.FromHsb(h, s, b, adjustAlpha ? a : oldColour.A);
+            return Unicolour.FromHsb(h, s, b, adjustAlpha ? a : oldAlpha.A);
         }
 
         public static double OptimalBearing(PointF point, int width, int height)
@@ -50,11 +54,12 @@
             var halfWidth = width / 2.0;
             var halfHeight = height / 2.0;
 
-            var isXBeyondMid = point.X > halfWidth;
-            var isYBeyondMid = point.Y > halfHeight;
+            var (x, y) = point;
+            var isXBeyondMid = x > halfWidth;
+            var isYBeyondMid = y > halfHeight;
 
-            var xDistance = isXBeyondMid ? point.X : width - point.X;
-            var yDistance = isYBeyondMid ? point.Y : height - point.Y;
+            var xDistance = isXBeyondMid ? x : width - x;
+            var yDistance = isYBeyondMid ? y : height - y;
 
             return isXBeyondMid switch
             {

@@ -3,6 +3,22 @@
     "Arbortrary": {
       "commandName": "Project",
       "commandLineArgs": "-t \"Arbortrary\""
+    },
+    "Example1-Colours": {
+      "commandName": "Project",
+      "commandLineArgs": "--text \"Arbortrary\" --background-colour \"#404046\" --first-node-colour \"#E8E8FF\""
+    },
+    "Example2-Colours+Nodes": {
+      "commandName": "Project",
+      "commandLineArgs": "--text \"Arbortrary\" --background-colour \"#404046\" --first-node-colour \"#E8E8FF\" --nodes 500"
+    },
+    "Example3-Colours+Scale+Gif": {
+      "commandName": "Project",
+      "commandLineArgs": "--text \"Arbortrary\" --gif --background-colour \"#E8E8FF\" --first-node-colour \"#404046\" --width 960 --height 540 --zoom 0.5"
+    },
+    "Banner": {
+      "commandName": "Project",
+      "commandLineArgs": "-t \"Arbortrary\" -b \"#404046\" -c \"#E8E8FF\" -w 1584 -h 386 -x 1188 -y 376 -d 0 -z 2"
     }
   }
 }

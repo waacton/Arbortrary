@@ -22,10 +22,10 @@
         [Option('h', "height", Required = false, Default = 1080, HelpText = "Height of the output image", MetaValue = "int")]
         public int Height { get; set; }
 
-        [Option('b', "background-colour", Required = false, HelpText = "(Default: random colour) Background colour in #ARGB format", MetaValue = "string")]
+        [Option('b', "background-colour", Required = false, HelpText = "(Default: random colour) Background colour in #RGBA format", MetaValue = "string")]
         public string Background { get; set; }
 
-        [Option('c', "first-node-colour", Required = false, HelpText = "(Default: random colour) Set first node colour to specified #ARGB format", MetaValue = "string")]
+        [Option('c', "first-node-colour", Required = false, HelpText = "(Default: random colour) Set first node colour to specified #RGBA format", MetaValue = "string")]
         public string FirstColour { get; set; }
 
         [Option('m', "first-node-match-background", Required = false, Default = false, HelpText = "Set first node colour to match background", MetaValue = "bool")]

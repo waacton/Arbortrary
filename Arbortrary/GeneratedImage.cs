@@ -8,6 +8,7 @@
     using SixLabors.ImageSharp.PixelFormats;
     using SixLabors.ImageSharp.Processing;
     using SixLabors.ImageSharp.Processing.Processors.Quantization;
+    using Wacton.Unicolour;
     using Path = System.IO.Path;
 
     public class GeneratedImage
@@ -29,13 +30,13 @@
             Zoom = zoom;
         }
         
-        public void SetBackground(Colour colour)
+        public void SetBackground(Unicolour colour)
         {
             Png.Mutate(x => x.BackgroundColor(colour.ToRgba32()));
             AddGifFrame();
         }
 
-        public void AddCircle(PointF point, Colour colour)
+        public void AddCircle(PointF point, Unicolour colour)
         {
             IBrush brush = new SolidBrush(colour.ToRgba32());
             var radius = EllipseRadius * Zoom;
@@ -44,7 +45,7 @@
             AddGifFrame();
         }
 
-        public void AddLine(PointF point1, Colour colour1, PointF point2, Colour colour2)
+        public void AddLine(PointF point1, Unicolour colour1, PointF point2, Unicolour colour2)
         {
             var colorStop1 = new ColorStop(0.0f, colour1.ToRgba32());
             var colorStop2 = new ColorStop(1.0f, colour2.ToRgba32());

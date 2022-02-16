@@ -17,13 +17,19 @@ Gif can also be generated:<br>
 `Wacton.Arbortrary.exe --text "Arbortrary" --gif --background-colour "#E8E8FF" --first-node-colour "#404046" --width 960 --height 540 --zoom 0.5`
 ![Example: tree for the text "Arbortrary" as a gif with custom initial colours and scaled down](Resources/example-4_initial-colours-scaled.gif "Example: tree for the text \"Arbortrary\" as a gif with custom initial colours and scaled down")
 
-## Attributions 🙇
+<details>
+<summary>Attributions 🙇</summary>
+
 This application uses the following software packages in conformance to their respective licences:
 
 - **CommandLineParser** ([MIT License](https://github.com/commandlineparser/commandline/blob/master/License.md) · [source](https://github.com/commandlineparser/commandline)),
-copyright © Giacomo Stelluti Scala & Contributors
+  copyright © Giacomo Stelluti Scala & Contributors
 - **SixLabors.ImageSharp** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp)), copyright © Six Labors
 - **SixLabors.ImageSharp.Drawing** ([Apache License 2.0](https://github.com/SixLabors/ImageSharp.Drawing/blob/master/LICENSE) · [source](https://github.com/SixLabors/ImageSharp.Drawing)), copyright © Six Labors
+- **Wacton.Unicolour** ([MIT License](https://gitlab.com/Wacton/Unicolour/-/blob/main/LICENSE) · [source](https://gitlab.com/Wacton/Unicolour)),
+  copyright © William Acton
+
+</details>
 
 ---
 

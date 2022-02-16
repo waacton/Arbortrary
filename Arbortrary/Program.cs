@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.IO;
     using CommandLine;
+    using Wacton.Unicolour;
     using PointF = SixLabors.ImageSharp.PointF;
 
     public class Program
@@ -27,7 +27,7 @@
             var random = new Random(seed);
 
             var fallbackBackground = random.GetColour(false);
-            var background = !string.IsNullOrEmpty(options.Background) ? GetColourFromString(options.Background) : fallbackBackground;
+            var background = !string.IsNullOrEmpty(options.Background) ? Unicolour.FromHex(options.Background) : fallbackBackground;
 
             var nodes = new List<Node>();
             var firstNode = GetFirstNode(options, background, random);
@@ -62,7 +62,7 @@
             return new Node(point, colour, bearing);
         }
 
-        private static Node GetFirstNode(Options options, Colour background, Random random)
+        private static Node GetFirstNode(Options options, Unicolour background, Random random)
         {
             if (options.FirstPixelX.HasValue ^ options.FirstPixelY.HasValue)
             {
@@ -84,9 +84,9 @@
             return new PointF(firstX, firstY);
         }
 
-        private static Colour GetFirstColour(string optionalColourString, bool matchesBackground, Colour background, bool adjustAlpha, Random random)
+        private static Unicolour GetFirstColour(string optionalColourString, bool matchesBackground, Unicolour background, bool adjustAlpha, Random random)
         {
-            Colour optionalColour = null;
+            Unicolour optionalColour = null;
             if (!string.IsNullOrEmpty(optionalColourString) && matchesBackground)
             {
                 throw new InvalidOperationException("First colour cannot match the background when a colour is set");
@@ -94,7 +94,7 @@
 
             if (!string.IsNullOrEmpty(optionalColourString))
             {
-                optionalColour = GetColourFromString(optionalColourString);
+                optionalColour = Unicolour.FromHex(optionalColourString);
             }
             else if (matchesBackground)
             {
@@ -111,12 +111,6 @@
             return optionalBearing ?? fallbackBearing;
         }
 
-        private static Colour GetColourFromString(string value)
-        {
-            var color = ColorTranslator.FromHtml(value);
-            return Colour.FromRgb(color.R, color.G, color.B, color.A);
-        }
-
         private static string GetOutputFilename(int? seed, string text, string filepath)
         {
             var date = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
@@ -128,7 +122,7 @@
             return string.IsNullOrEmpty(details) ? $"{date}.png" : $"{date}_{details}.png";
         }
 
-        private static void PrintDetails(Options options, int seed, string seedSource, Colour background, Node firstNode)
+        private static void PrintDetails(Options options, int seed, string seedSource, Unicolour background, Node firstNode)
         {
             Console.WriteLine("Arbortrarily generating using...");
             Console.WriteLine($"    - seed {seed} (from {seedSource})");
