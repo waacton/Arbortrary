@@ -12,13 +12,14 @@
 	<Copyright>William Acton</Copyright>
 	<RepositoryUrl>https://gitlab.com/Wacton/arbortrary</RepositoryUrl>
 	<ApplicationIcon>Resources\Arbortrary.ico</ApplicationIcon>
+	<PackageVersion>1.1.0</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
-    <PackageReference Include="Wacton.Unicolour" Version="1.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
+    <PackageReference Include="Wacton.Unicolour" Version="1.5.0" />
   </ItemGroup>
 
 </Project>

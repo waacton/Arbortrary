@@ -6,12 +6,12 @@ namespace Wacton.Arbortrary.Tests
 
     public class Regression
     {
-        private Image<Rgba32> imageVersion1;
+        private Image<Rgba32> expectedImage;
 
         [SetUp]
         public void Setup()
         {
-            imageVersion1 = (Image<Rgba32>)Image.Load(@"Resources/Arbortrary_v1.png"); // remember to set "Copy to Output Directory"
+            expectedImage = (Image<Rgba32>)Image.Load(@"Resources/Arbortrary_v1.1.png"); // remember to set "Copy to Output Directory"
         }
 
         [Test]
@@ -19,14 +19,17 @@ namespace Wacton.Arbortrary.Tests
         {
             var options = new Options { Text = "Arbortrary", Width = 1920, Height = 1080, NodeCount = 200, Zoom = 1 };
             var generatedImage = Program.GenerateTreeImage(options);
-            var png = (Image<Rgba32>) generatedImage.Png;
-
-            for (var y = 0; y < imageVersion1.Height; y++)
+            var actualImage = (Image<Rgba32>) generatedImage.Png;
+            
+            expectedImage.ProcessPixelRows(actualImage, (expectedImageAccessor, actualImageAccessor) =>
             {
-                var expectedRow = imageVersion1.GetPixelRowSpan(y);
-                var actualRow = png.GetPixelRowSpan(y);
-                Assert.That(actualRow.ToArray(), Is.EqualTo(expectedRow.ToArray()));
-            }
+                for (var y = 0; y < expectedImageAccessor.Height; y++)
+                {
+                    var expectedRow = expectedImageAccessor.GetRowSpan(y);
+                    var actualRow = actualImageAccessor.GetRowSpan(y);
+                    Assert.That(actualRow.ToArray(), Is.EqualTo(expectedRow.ToArray()));
+                }
+            });
         }
     }
 }
