@@ -1,19 +1,18 @@
-﻿namespace Wacton.Arbortrary
+﻿namespace Wacton.Arbortrary;
+
+using SixLabors.ImageSharp;
+using Wacton.Unicolour;
+
+internal class Node
 {
-    using SixLabors.ImageSharp;
-    using Wacton.Unicolour;
+    public PointF Point { get; }
+    public Unicolour Colour { get; }
+    public double Bearing { get; }
 
-    internal class Node
+    public Node(PointF point, Unicolour colour, double bearing)
     {
-        public PointF Point { get; }
-        public Unicolour Colour { get; }
-        public double Bearing { get; }
-
-        public Node(PointF point, Unicolour colour, double bearing)
-        {
-            Point = point;
-            Colour = colour;
-            Bearing = bearing;
-        }
+        Point = point;
+        Colour = colour;
+        Bearing = bearing;
     }
 }
