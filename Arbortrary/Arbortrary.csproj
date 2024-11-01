@@ -21,7 +21,7 @@
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
-    <PackageReference Include="Wacton.Unicolour" Version="4.6.0" />
+    <PackageReference Include="Wacton.Unicolour" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
